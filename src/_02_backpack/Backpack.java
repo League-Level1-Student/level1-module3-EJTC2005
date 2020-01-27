@@ -55,7 +55,7 @@ public class Backpack {
 }
 
 abstract class Supply {
-	protected String name;
+	protected String name;	
 }
 
 class Pencil extends Supply {
