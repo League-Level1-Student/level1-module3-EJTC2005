@@ -12,9 +12,11 @@ import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
@@ -28,14 +30,14 @@ public class MagicBox extends JPanel implements Runnable, MouseListener {
 	 * 
 	 * 2. When the mouse is clicked, use the Media Palace (read the code in the magic_box package) to play sounds, 
 	 *    show images or speak.
-	 * 
+	 *    
 	 * 3. Choose 3 different locations on the background image.You can either use the mouse position, 
 	 *    or the color of the image, then decide what action the Media Palace should take in each case. 
 	 *     backgroundImage.getRGB(e.getX(), e.getY()) will give you the color of the current pixel.
 	 */
 
 	BufferedImage backgroundImage;
-
+	JFrame frame = new JFrame("The Magic Box contains many secrets...");
 
 	@Override
 	public void run() {
@@ -48,12 +50,13 @@ public class MagicBox extends JPanel implements Runnable, MouseListener {
 	}
 
 	private void createUI() {
-		JFrame frame = new JFrame("The Magic Box contains many secrets...");
+		
 		frame.add(this);
 		setPreferredSize(new Dimension(backgroundImage.getWidth(), backgroundImage.getHeight()));
 		frame.pack();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
+		frame.addMouseListener(this);
 	}
 
 	private void loadBackgroundImage() throws Exception {
@@ -73,13 +76,27 @@ public class MagicBox extends JPanel implements Runnable, MouseListener {
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
+		MediaPalace m = new MediaPalace();
+		m.playSoundFromInternet("http://www.wavsource.com/snds_2018-06-03_5106726768923853/animals/bear_growl_y.wav");
+		
+			try {
+				
+				JLabel image = m.loadImageFromTheInternet("https://upload.wikimedia.org/wikipedia/commons/e/ea/Vervet_Monkey_%28Chlorocebus_pygerythrus%29.jpg");
+				frame.add(image);
+				frame.pack();
+			} catch (MalformedURLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		
+			// TODO Auto-generated catch block
+			
 		
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
